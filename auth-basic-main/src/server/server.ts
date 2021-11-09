@@ -27,7 +27,7 @@ const saltRounds = 10;
 const PORT = 3000;
 
 mongoose
-  .connect("mongodb://localhost:27017/test")
+  .connect("mongodb://localhost:27017/restaurantDB")
   .then(() => {
     console.log("Connected to DB Successfully");
   })
