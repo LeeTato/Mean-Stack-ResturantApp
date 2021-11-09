@@ -1,16 +1,17 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth.guard';
-import { PageLoginComponent } from './pages/page-login/page-login.component';
-import { PageUsersComponent } from './pages/page-users/page-users.component';
+import { Component } from '@angular/core';
+// import { SocketioService } from './services/socket.service';
 
-const routes: Routes = [
-  {path: 'login', component: PageLoginComponent},
-  {path: 'users', component: PageUsersComponent, canActivate: [AuthGuard], resolve: []}
-];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
-export class AppRoutingModule { }
+export class AppComponent {
+
+  title = 'client';
+  constructor() {}
+
+  ngOnInit() {
+    // this.socketService.getMessage().subscribe(message => { console.log(message); });
+  }
+}
