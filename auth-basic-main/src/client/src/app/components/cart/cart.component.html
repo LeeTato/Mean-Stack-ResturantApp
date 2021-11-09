@@ -1,0 +1,11 @@
+<p>cart works!</p>
+<ng-container *ngIf="(cart$ | async) as cart">
+  {{cart.user}}
+/<ng-container *ngFor="let item of cart.items">
+ {{item.foodName}}
+ <br>
+ <img src="{{item.img}}"/><br>
+ {{item.foodPrice}}
+</ng-container>
+
+</ng-container>
