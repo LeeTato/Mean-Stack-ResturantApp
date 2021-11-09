@@ -16,6 +16,15 @@ import { UserEffects } from './store/effects/user/user.effects';
 import { PageUsersComponent } from './pages/page-users/page-users.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { PageLoginComponent } from './pages/page-login/page-login.component';
+import { CreateFoodMenuComponent } from './components/create-food-menu/create-food-menu.component';
+import * as fromFood from './store/reducers/food/food.reducer';
+import { FoodEffects } from './store/effects/food/food.effects';
+import { FoodMenuListComponent } from './components/food-menu-list/food-menu-list.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { HomeComponent } from './components/home/home.component';
+import { CartComponent } from './components/cart/cart.component';
+import { CartEffects } from './store/effects/cart/cart.effects';
+import * as fromCart from './store/reducers/cart/cart.reducer';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -25,7 +34,12 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     UsersListComponent,
     UserInputComponent,
     PageUsersComponent,
-    PageLoginComponent
+    PageLoginComponent,
+    CreateFoodMenuComponent,
+    FoodMenuListComponent,
+    NavigationComponent,
+    HomeComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -36,8 +50,10 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
-    EffectsModule.forRoot([UserEffects]),
+    EffectsModule.forRoot([UserEffects, FoodEffects, CartEffects]),
     SocketIoModule.forRoot(config),
+    StoreModule.forFeature(fromFood.foodFeatureKey, fromFood.reducer),
+    StoreModule.forFeature(fromCart.cartFeatureKey, fromCart.reducer),
   ],
   providers: [],
   bootstrap: [AppComponent]
