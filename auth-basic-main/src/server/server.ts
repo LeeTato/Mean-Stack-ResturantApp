@@ -6,18 +6,20 @@ import { UserModel } from "./schemas/user.schema.js";
 import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
 import cookieParser from "cookie-parser";
-import * as socketIO from "socket.io";
+//import * as socketIO from "socket.io";
 import http from 'http';
 import dotenv from "dotenv";
 import { authHandler } from "./middleware/auth.middleware.js";
+import { FoodModel } from "./schemas/food.schema.js";
+import { CartModel } from "./schemas/cart.schema.js";
 dotenv.config();
 const access_secret = process.env.ACCESS_TOKEN_SECRET as string;
 console.log(access_secret);
 const app = express();
-const server = http.createServer(app);
-const io = new socketIO.Server(server,  { cors: {
-  origin: '*'
-}});
+// const server = http.createServer(app);
+// const io = new socketIO.Server(server,  { cors: {
+//   origin: '*'
+// }});
 
 
 
@@ -53,17 +55,17 @@ app.get("/posts", function (req, res) {
     });
 });
 
-app.get("/users", authHandler, function (req: any, res) {
-  UserModel.find({}, '-password')
+app.get("/users", function (req: any, res) {
+  UserModel.find({email:req.user.email}, '-password')
     .then((data) => res.json({ data }))
     .catch((err) => {
       res.status(501);
       res.json({ errors: err });
     });
 });
+
 app.post("/create-user", function (req, res) {
   const { name, email, username, password } = req.body;
-
   bcrypt.genSalt(saltRounds, function (err, salt) {
     bcrypt.hash(password, salt, function (err, hash) {
       const user = new UserModel({
@@ -76,6 +78,11 @@ app.post("/create-user", function (req, res) {
         .save()
         .then((data) => {
           res.json({ data });
+        }).then(()=>{
+          const cart = new CartModel({
+            user: user._id,
+          })
+          cart.save()
         })
         .catch((err) => {
           res.status(501);
@@ -135,17 +142,19 @@ app.post("/login", function (req, res) {
 
   UserModel.findOne({ email })
     .then((user) => {
-        console.log(user);
+        console.log("LOGIN USER",user);
       
       bcrypt.compare(password, `${user?.password}`, function (err, result) {
         if (result) {
           console.log("It matches!");
           const accessToken = jwt.sign({user}, access_secret)
+          console.log("Token", accessToken)
           res.cookie('jwt', accessToken, {
               httpOnly: true,
-              maxAge: 60 * 1000,
+              maxAge: 60*60*1000,
           })
-          res.json({message: 'Successfully Logged In'})
+          // res.json({message: 'Successfully Logged In', user})
+          res.json({data:user})
         } else {
           res.sendStatus(403);
         }
@@ -168,16 +177,106 @@ app.get('/check-login', authHandler, (req, res) => {
   res.json({message: 'yes'});
 })
 
-server.listen(PORT, function () {
-  console.log(`starting at localhost http://localhost:${PORT}`);
+
+//create food
+
+app.post("/create-food", function (req, res) {
+  const {foodName, img,foodPrice } = req.body;
+     const food = new FoodModel({
+      foodName,
+      img,
+      foodPrice,
+      });
+      food.save()
+        .then((data: any) => {
+          res.json({ data });
+        })
+        .catch((err) => {
+          res.status(501);
+          res.json({ errors: err });
+        });
+    });
+
+
+// get foods
+
+app.get("/foods",authHandler, function (req, res) {
+  FoodModel.find()
+    .then((data) => res.json({ data }))
+    .catch((err) => {
+      res.status(501);
+      res.json({ errors: err });
+    });
 });
 
-
-io.on('connection', function(socket){
-  console.log('a user connected');
-  socket.emit('message', 'work')
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
+//Delete food
+app.delete("/delete-food/:id", function (req, res) {
+  const _id = req.params.id;
+  FoodModel.findByIdAndDelete(_id).then((data) => {
+    console.log(data);
+    res.json({ data });
   });
 });
+
+
+//Update cart
+app.put("/update-cart",authHandler, function (req:any, res) {
+  
+  console.log("Login User", req.user)
+
+  CartModel.findOneAndUpdate(
+    {user:req.user._id},
+    {
+      $push: { items:req.body._id },
+    },
+    {
+      new: true,
+    },
+    function (err, updateCart) {
+      if (err) {
+        res.send("Error updating cart");
+      } else {
+        res.json(updateCart);
+      }
+    }
+  );
+});
+
+// Get cart
+app.get("/cart", authHandler, function (req: any, res) {
+  CartModel.findOne( 
+    {user:req.user._id}
+  ).populate('items')
+    .then((data) => res.json({ data }))
+    .catch((err) => {
+      res.status(501);
+      res.json({ errors: err });
+    });
+});
+
+// Delete cart
+app.delete("/delete-cart/:id", function (req, res) {
+  const _id = req.params.id;
+  CartModel.findByIdAndDelete(_id).then((data) => {
+    console.log(data);
+    res.json({ data });
+  });
+});
+
+
+
+app.listen(PORT, function () {
+  console.log(`starting at localhost http://localhost:${PORT}`);
+
+
+});
+
+
+// io.on('connection', function(socket){
+//   console.log('a user connected');
+//   socket.emit('message', 'work')
+//   socket.on('disconnect', function(){
+//     console.log('user disconnected');
+//   });
+// });
 
