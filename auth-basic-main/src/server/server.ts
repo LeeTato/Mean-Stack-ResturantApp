@@ -92,22 +92,7 @@ app.post("/create-user", function (req, res) {
   });
 });
 
-app.post("/create-post", function (req, res) {
-  const { title, body } = req.body;
-  const post = new PostModel({
-    title,
-    body,
-  });
-  post
-    .save()
-    .then((data) => {
-      res.json({ data });
-    })
-    .catch((err) => {
-      res.status(501);
-      res.json({ errors: err });
-    });
-});
+// Delete user
 
 app.delete("/delete-user/:id", function (req, res) {
   const _id = req.params.id;
@@ -117,6 +102,8 @@ app.delete("/delete-user/:id", function (req, res) {
   });
 });
 
+
+//Update User
 app.put("/update-user/:id", function (req, res) {
   console.log("Update user");
   UserModel.findByIdAndUpdate(
@@ -137,6 +124,7 @@ app.put("/update-user/:id", function (req, res) {
   );
 });
 
+// Login 
 app.post("/login", function (req, res) {
   const { email, password } = req.body;
 console.log("Login Information", req.body)
@@ -214,7 +202,7 @@ app.get("/foods",authHandler, function (req, res) {
     });
 });
 
-//Delete food
+//Delete food 
 app.delete("/delete-food/:id", function (req, res) {
   const _id = req.params.id;
   FoodModel.findByIdAndDelete(_id).then((data) => {
@@ -224,16 +212,14 @@ app.delete("/delete-food/:id", function (req, res) {
 });
 
 
-//Update cart
+//push Items to cart 
 app.put("/update-cart",authHandler, function (req:any, res) {
   
   console.log("Login User", req.user)
 
   CartModel.findOneAndUpdate(
     {user:req.user._id},
-    {
-      $push: { items:req.body._id },
-    },
+    {$push: { items:req.body._id },},
     {
       new: true,
     },
@@ -247,11 +233,12 @@ app.put("/update-cart",authHandler, function (req:any, res) {
   );
 });
 
-// Get cart
+// Get cart Items
 app.get("/cart", authHandler, function (req: any, res) {
   CartModel.findOne( 
     {user:req.user._id}
   ).populate('items')
+  .populate('user')
     .then((data) => res.json({ data }))
     .catch((err) => {
       res.status(501);
@@ -259,24 +246,25 @@ app.get("/cart", authHandler, function (req: any, res) {
     });
 });
 
-// Delete cart
+// Delete cart Items
   app.put("/delete-cart/:id",authHandler, function (req:any, res) {
     CartModel.findOneAndUpdate(
       {user:req.user._id},
       {
+      
         $pull: { items:req.params.id },
       },
       {
         new: true,
       },
-      function (err, deleteCart) {
+      function (err, deleteItemFromCart) {
         if (err) {
-          res.send("Error updating cart");
+          res.send("Error delete Items from cart");
         } else {
-          res.json(deleteCart);
+          res.json(deleteItemFromCart);
         }
       }
-    );
+    ).populate('items')
   });
 
 
