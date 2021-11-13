@@ -55,7 +55,7 @@ app.get("/posts", function (req, res) {
     });
 });
 
-app.get("/users", function (req: any, res) {
+app.get("/users", authHandler, function (req: any, res) {
   UserModel.find({email:req.user.email}, '-password')
     .then((data) => res.json({ data }))
     .catch((err) => {
@@ -139,7 +139,7 @@ app.put("/update-user/:id", function (req, res) {
 
 app.post("/login", function (req, res) {
   const { email, password } = req.body;
-
+console.log("Login Information", req.body)
   UserModel.findOne({ email })
     .then((user) => {
         console.log("LOGIN USER",user);
@@ -165,13 +165,18 @@ app.post("/login", function (req, res) {
     });
 });
 
-app.get('logout', function(req, res){
+
+// Logout
+
+app.get('logout', authHandler, function(req, res){
     res.cookie('jwt', '', {
         httpOnly: true,
         maxAge: 0,
     })
     res.json({message: 'Successfully Logged Out'})
 });
+
+//Check if the user Login 
 
 app.get('/check-login', authHandler, (req, res) => {
   res.json({message: 'yes'});
@@ -255,13 +260,24 @@ app.get("/cart", authHandler, function (req: any, res) {
 });
 
 // Delete cart
-app.delete("/delete-cart/:id", function (req, res) {
-  const _id = req.params.id;
-  CartModel.findByIdAndDelete(_id).then((data) => {
-    console.log(data);
-    res.json({ data });
+  app.put("/delete-cart/:id",authHandler, function (req:any, res) {
+    CartModel.findOneAndUpdate(
+      {user:req.user._id},
+      {
+        $pull: { items:req.params.id },
+      },
+      {
+        new: true,
+      },
+      function (err, deleteCart) {
+        if (err) {
+          res.send("Error updating cart");
+        } else {
+          res.json(deleteCart);
+        }
+      }
+    );
   });
-});
 
 
 
