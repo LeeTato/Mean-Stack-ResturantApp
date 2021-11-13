@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import type { Food } from '../../shared/models/food.model';
+import type { Food } from '../../shared/models/food.model.js';
 const {Schema, model} = mongoose
 
 const foodSchema = new Schema<Food>({

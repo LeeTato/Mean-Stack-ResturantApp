@@ -36,6 +36,7 @@ export class CreateFoodMenuComponent implements OnInit {
   this.store.dispatch( deleteFood({data: food}))
   console.log(`food '${food.foodName}' deleted successfully`);
 }
+  
 }
 
 
