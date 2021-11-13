@@ -1,10 +1,35 @@
-<form [formGroup] = 'addUser'>
+<!-- <form [formGroup] = 'addUser'>
     <input type="text" formControlName='name' placeholder="name">
     <input type="text" formControlName='email' placeholder="email">
     <input type="text" formControlName='username' placeholder="username">
     <input type="text" formControlName='password' placeholder="password">
     <button (click)='postUser(selectedUser)' [disabled]='addUser.invalid'>{{(selectedUser) ? 'Update User' : 'Add User'}}</button>
     <button (click)="login()">Login</button>
+</form> -->
+<div class="container">
+  <div class="row" style=" align-items: center;">
+
+<form [formGroup] = 'addUser' style="padding-left: 50%;">
+  <h2>Login Page</h2><br>
+  <div class="mb-3">
+    <label class="form-label">Name</label><br>
+    <input type="text" formControlName='name' placeholder="name">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Email address</label><br>
+    <input type="text" formControlName='email' placeholder="email">
+
+  </div>
+  <div class="mb-3">
+    <label class="form-label">userName</label><br>
+    <input type="text" formControlName='username' placeholder="username">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Password</label><br>
+    <input type="text" formControlName='password' placeholder="password">
+  </div>
+  <button (click)="login()">Login</button>
+  <button (click)='postUser(selectedUser)' [disabled]='addUser.invalid'>{{(selectedUser) ? 'Update User' : 'Create User'}}</button>
 </form>
-
-
+</div>
+</div>

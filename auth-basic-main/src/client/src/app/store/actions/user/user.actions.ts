@@ -80,3 +80,16 @@ export const loginUserFailure = createAction(
   '[User] Login User Failure',
   props<{ error: Error }>()
 );
+export const logoutUser = createAction(
+  '[User] logout User',
+);
+
+export const logoutUserSuccess = createAction(
+  '[User] logout User Success',
+ 
+);
+
+export const logoutUserFailure = createAction(
+  '[User] logout User Failure',
+  props<{ error: Error }>()
+);

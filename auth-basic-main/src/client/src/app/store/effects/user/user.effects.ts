@@ -16,6 +16,8 @@ import {
   loginUser,
   loginUserFailure,
   loginUserSuccess,
+  logoutUser,
+  logoutUserSuccess,
   updateUser,
   updateUserFailure,
   updateUserSuccess,
@@ -82,6 +84,19 @@ export class UserEffects {
     )
   )
 );
+
+logoutUsers$ = createEffect(() =>
+this.actions$.pipe(
+  ofType(logoutUser),
+  mergeMap(() =>
+    this.userService.logout().pipe(
+      map((data) => logoutUserSuccess()),
+      catchError((error) => of(loginUserFailure({ error })))
+    )
+  )
+)
+);
+
 
   constructor(private actions$: Actions, private userService: UserService) {}
 }
