@@ -24,7 +24,7 @@ export class CartService {
 
   }
   deleteFromCart(food: Food) {
-    return this.api. put<{ data: Cart }>('delete-cart/' + food._id, food)
+    return this.api. put<Cart >('delete-cart/' + food._id, food)
 
   }
 }

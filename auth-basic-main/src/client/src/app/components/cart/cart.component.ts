@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { timeStamp } from 'console';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store';
 import { deleteCart, loadCart } from 'src/app/store/actions/cart/cart.actions';
@@ -33,5 +34,10 @@ export class CartComponent implements OnInit {
 deleteFromCart(food: Food){
   this.store.dispatch(deleteCart({data: food}))
 }
-}
+ costTotal(){
+
+   }
+ }
+
+
 

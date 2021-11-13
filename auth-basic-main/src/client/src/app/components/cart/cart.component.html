@@ -1,6 +1,8 @@
 <p>cart works!</p>
-Hello
 
+<li *ngFor="let user of user$ | async">
+  Hello  {{user.name}}
+</li>
 <h3 style="padding-left: 40%;">Cart Items</h3><br><br><hr>
 <ng-container *ngIf="(cart$ | async) as cart">
 <ng-container *ngFor="let item of cart.items">
@@ -28,15 +30,17 @@ Hello
     <div class="col"><h2>Cart Item Total:</h2></div>
     <div class="col">
 <ng-container *ngIf="(cart$ | async) as cart">
+
   <ng-container *ngIf="(cart.items) as item">
    <p>  {{item.length}}</p>
+
 </ng-container>
+<div class="col">
+  <div><h2> Total Price {{cart.total}}</h2></div>
+  </div>
+
 </ng-container>
 </div>
 </div>
-<div class="row">
-<div><h2>TotalPrice:</h2></div>
-</div>
-<li *ngFor="let user of user$ | async">
-  {{user.email}}
-</li>
+
+
