@@ -18,11 +18,13 @@
           <a class="nav-link" routerLink="/menuList">Menu</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/users">Users</a><br>
+          <a class="nav-link" routerLink="/users">Account</a><br>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/login">Login</a>
         </li>
+
+
         <li class="nav-item me-3 me-lg-0" >
           <a class="nav-link" routerLink="/cart">
             <i class="fas fa-shopping-cart">
@@ -30,7 +32,6 @@
               <ng-container *ngIf="(cart.items) as item">
                 {{item.length}}
            </ng-container>
-
            </ng-container>
                </i>
           </a>
@@ -38,6 +39,7 @@
         </li>
       </ul>
     </div>
+ <button (click)="logout()">Logout</button>
   </div>
 </nav>
 

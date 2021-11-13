@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store';
+import { logoutUser } from 'src/app/store/actions/user/user.actions';
 import { cartSelector } from 'src/app/store/selectors/cart/cart.selectors';
 import { Cart } from '../../../../../shared/models/cart.model';
 
@@ -18,5 +19,8 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+logout(){
+  this.store.dispatch(logoutUser())
 }
+}
+
