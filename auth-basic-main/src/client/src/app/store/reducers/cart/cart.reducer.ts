@@ -26,9 +26,9 @@ export const reducer = createReducer(
     return { ...state, cart: action.data }
   }),
 
- // on(deleteCartSuccess, (state, action) => {
-    //return {...state, cart: state.cart.filter(cart => cart._id !== action.data._id)}
-  //}),
+ on(deleteCartSuccess, (state, action) => {
+    return {...state, cart: action.data};
+  }),
 
 );
 

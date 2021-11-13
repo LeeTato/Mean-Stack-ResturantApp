@@ -31,7 +31,7 @@ export const updateCartFailure = createAction(
 );
 export const deleteCart = createAction(
   '[Cart] delete Cart',
-  props<{ data: Cart }>()
+  props<{ data: Food }>()
 );
 
 export const deleteCartSuccess = createAction(

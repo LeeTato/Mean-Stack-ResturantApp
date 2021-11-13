@@ -38,7 +38,7 @@ this.actions$.pipe(
   ofType(deleteCart),
   mergeMap((action) =>
     this.cartService.deleteFromCart(action.data).pipe(
-      map((data) => deleteCartSuccess({ data })),
+      map((data) => deleteCartSuccess( data )),
       catchError((error) => of(deleteCartFailure({ error })))
     )
   )

@@ -23,9 +23,8 @@ export class CartService {
     .pipe(map((res) => res.data));
 
   }
-  deleteFromCart(cart: Cart) {
-    return this.api
-      .delete<{ data: Cart }>('delete-cart/' + cart._id)
-      .pipe(map((res) => res.data));
+  deleteFromCart(food: Food) {
+    return this.api. put<{ data: Cart }>('delete-cart/' + food._id, food)
+
   }
 }
