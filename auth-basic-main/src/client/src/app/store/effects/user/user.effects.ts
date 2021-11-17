@@ -17,6 +17,7 @@ import {
   loginUserFailure,
   loginUserSuccess,
   logoutUser,
+  logoutUserFailure,
   logoutUserSuccess,
   updateUser,
   updateUserFailure,
@@ -91,7 +92,7 @@ this.actions$.pipe(
   mergeMap(() =>
     this.userService.logout().pipe(
       map((data) => logoutUserSuccess()),
-      catchError((error) => of(loginUserFailure({ error })))
+      catchError((error) => of(logoutUserFailure({ error })))
     )
   )
 )

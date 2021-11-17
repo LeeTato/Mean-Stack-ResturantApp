@@ -16,11 +16,13 @@ export class UserService {
     return this.api.get<{ data: User[] }>('users').pipe(map((res) => res.data));
   }
   createUser(user: User) {
+    this.router.navigate(['/userLogin']);
     return this.api
       .post<{ data: User }>('create-user', user)
       .pipe(map((res) => res.data));
   }
   login(user: Partial<User>) {
+    this.router.navigate(['/menuList']);
     return this.api
       .post<{ data: User }>('login', user)
       .pipe(map((res) => res.data));
@@ -38,10 +40,10 @@ export class UserService {
   selectUser(id: string) {
     this.selectedUserId = id;
   }
-  
+
   logout(){
-    this.router.navigate(['/login']);
-     return this.api.get<string>('logout')
+    this.router.navigate(['/userLogin']);
+     return this.api.get('logout')
 
   }
 }

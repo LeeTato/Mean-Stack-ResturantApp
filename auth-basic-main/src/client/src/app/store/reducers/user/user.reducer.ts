@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { User } from '../../../../../../shared/models/user.model';
-import { createUserSuccess, deleteUserSuccess, loadUsers, loadUsersSuccess, selectUserAction, updateUserSuccess } from '../../actions/user/user.actions';
+import { createUserSuccess, deleteUserSuccess, loadUsers, loadUsersSuccess, logoutUserSuccess, selectUserAction, updateUserSuccess } from '../../actions/user/user.actions';
 
 
 export const userFeatureKey = 'user';
@@ -35,6 +35,10 @@ export const reducer = createReducer(
     const users = [...state.users];
     users.push(action.data);
     return {...state, users}
-  })
+  }),
+  on(logoutUserSuccess, (state, action) => {
+    return { ...state, selectedUser:null }
+  }),
+
 );
 
