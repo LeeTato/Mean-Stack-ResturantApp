@@ -6,12 +6,13 @@ const {Schema, model} = mongoose
 const cartSchema = new Schema<Cart>({
     user:{type: mongoose.Types.ObjectId, ref:'User'},
     items:[{type: mongoose.Types.ObjectId, ref:'Food'}],
-
-    // createdAt?: {type: Date, default: Date.now}
+    foodQty:{type: Number},
+    
+  
    
 });
 
-cartSchema.virtual('total').get(function(this:Cart){
+cartSchema.virtual('totalPrice').get(function(this:Cart){
     return this.items.reduce((amount:number, item:Food)=>{
         return item.foodPrice + amount
     }, 0)

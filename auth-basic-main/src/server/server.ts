@@ -105,7 +105,6 @@ app.delete("/delete-user/:id", function (req, res) {
 
 //Update User
 app.put("/update-user/:id", function (req, res) {
-  console.log("Update user");
   UserModel.findByIdAndUpdate(
     req.params.id,
     {
@@ -156,7 +155,8 @@ console.log("Login Information", req.body)
 
 // Logout
 
-app.get('logout', authHandler, function(req, res){
+app.get('/logout', authHandler, function(req, res){
+  console.log('LOGOUT' )
     res.cookie('jwt', '', {
         httpOnly: true,
         maxAge: 0,
@@ -232,6 +232,8 @@ app.put("/update-cart",authHandler, function (req:any, res) {
     }
   );
 });
+
+
 
 // Get cart Items
 app.get("/cart", authHandler, function (req: any, res) {

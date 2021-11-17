@@ -6,8 +6,9 @@ const foodSchema = new Schema<Food>({
     foodName: {type: String, required: true},
     img:{type: String, required: true},
     foodPrice:{type: Number, required: true},
-    // foodQty:{type: Number, required: true},
+   
 });
+
 
 
 

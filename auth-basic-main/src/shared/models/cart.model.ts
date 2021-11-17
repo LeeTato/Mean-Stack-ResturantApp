@@ -5,8 +5,10 @@ export interface Cart {
     _id?:{type: mongoose.Types.ObjectId}
     user?:User
     items:Food[],
-    total?:number,
-    // createdAt?:string,
+    totalPrice?:number,
+    foodQty:number
+    
+    
 
 
 }
