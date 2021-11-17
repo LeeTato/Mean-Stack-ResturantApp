@@ -28,7 +28,7 @@
     <label class="form-label">Password</label><br>
     <input type="text" formControlName='password' placeholder="password">
   </div>
-  <button (click)="login()">Login</button>
+  <!-- //<button (click)="login()">Login</button> -->
   <button (click)='postUser(selectedUser)' [disabled]='addUser.invalid'>{{(selectedUser) ? 'Update User' : 'Create User'}}</button>
 </form>
 </div>

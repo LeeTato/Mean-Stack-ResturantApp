@@ -1,0 +1,20 @@
+<p>login works!</p>
+<div class="container">
+  <div class="row" style=" align-items: center;">
+
+<form [formGroup] = 'userLogin' style="padding-left: 50%;">
+  <h2>Login Page</h2><br>
+
+  <div class="mb-3">
+    <label class="form-label">Email address</label><br>
+    <input type="text" formControlName='email' placeholder="email">
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Password</label><br>
+    <input type="text" formControlName='password' placeholder="password">
+  </div>
+  <button (click)="login()">Login</button>
+</form>
+</div>
+</div>

@@ -1,4 +1,4 @@
-
+<!--
   <div class="container-fluid">
     <div class="row"style="height:250px">
       <div class="col-sm-12" style="background-image: url('../../../assets/img/img1.jfif');">
@@ -15,5 +15,19 @@
     </div>
     <br>
 
-</div>
+</div> -->
 
+<div class="container-fluid">
+  <div class="row">
+    <div class= "col">
+
+  <owl-carousel-o [options]="customOptions">
+    <ng-template carouselSlide>
+      <img src="https://images.squarespace-cdn.com/content/v1/5d59e48b1f704e0001e5d414/1593195908010-EA3GV0TLUOF8P20URCFX/TheRise_Wall.jpg?format=750w width=750 hight=882">
+    </ng-template>
+    <ng-template carouselSlide><img src="../../../assets/img/menu2.jpg"></ng-template>
+    <ng-template carouselSlide><img src="../../../assets/img/img3.jfif"></ng-template>
+  </owl-carousel-o>
+</div>
+  </div>
+</div>
