@@ -5,6 +5,7 @@ import { CreateFoodMenuComponent } from './components/create-food-menu/create-fo
 import { FoodMenuListComponent } from './components/food-menu-list/food-menu-list.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './guards/auth.guard';
+import { LoginComponent } from './pages/login/login.component';
 import { PageLoginComponent } from './pages/page-login/page-login.component';
 import { PageUsersComponent } from './pages/page-users/page-users.component';
 
@@ -13,8 +14,10 @@ const routes: Routes = [
   {path: 'createMenu', component: CreateFoodMenuComponent},
   {path: 'menuList', component: FoodMenuListComponent},
   {path: 'cart', component: CartComponent},
+  {path: 'userLogin', component: LoginComponent},
   {path: 'users', component: PageUsersComponent, canActivate: [AuthGuard], resolve: []},
-  {path: 'home', component: HomeComponent}
+  {path: 'home', component: HomeComponent},
+
 ];
 
 @NgModule({

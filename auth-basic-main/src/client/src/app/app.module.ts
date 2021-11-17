@@ -25,6 +25,8 @@ import { HomeComponent } from './components/home/home.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CartEffects } from './store/effects/cart/cart.effects';
 import * as fromCart from './store/reducers/cart/cart.reducer';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { LoginComponent } from './pages/login/login.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -39,13 +41,15 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     FoodMenuListComponent,
     NavigationComponent,
     HomeComponent,
-    CartComponent
+    CartComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    CarouselModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],

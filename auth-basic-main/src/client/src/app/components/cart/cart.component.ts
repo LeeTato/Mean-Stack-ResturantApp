@@ -34,9 +34,7 @@ export class CartComponent implements OnInit {
 deleteFromCart(food: Food){
   this.store.dispatch(deleteCart({data: food}))
 }
- costTotal(){
 
-   }
  }
 
 
