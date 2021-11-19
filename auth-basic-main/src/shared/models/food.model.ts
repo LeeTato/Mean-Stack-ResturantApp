@@ -4,6 +4,6 @@ export interface Food {
     foodName: string,
     img:string,
     foodPrice:number,
-     foodQty:number,
+    quantity:number
     
     }

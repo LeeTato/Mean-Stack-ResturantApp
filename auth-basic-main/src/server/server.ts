@@ -198,7 +198,7 @@ app.get("/foods",authHandler, function (req, res) {
     .then((data) => res.json({ data }))
     .catch((err) => {
       res.status(501);
-      res.json({ errors: err });
+      res.json({ errors: err })
     });
 });
 
@@ -211,27 +211,77 @@ app.delete("/delete-food/:id", function (req, res) {
   });
 });
 
-
-//push Items to cart 
-app.put("/update-cart",authHandler, function (req:any, res) {
-  
-  console.log("Login User", req.user)
-
-  CartModel.findOneAndUpdate(
+//************************************************************************************************ */
+app.put("/update-cart", authHandler, function (req: any, res) {
+  CartModel.findOne(
     {user:req.user._id},
-    {$push: { items:req.body._id },},
-    {
-      new: true,
-    },
-    function (err, updateCart) {
-      if (err) {
-        res.send("Error updating cart");
-      } else {
-        res.json(updateCart);
-      }
+  
+  ).populate('items.food').then(cart => {
+    console.log(cart, "Cart")
+    if(cart) {
+      console.log(req.body, req.body._id, cart.items[0])
+      const item = cart.items.find(item => item.food._id == req.body._id)
+      console.log(item, "item")
+     if(item) {
+       item.quantity++
+     } else {
+       cart.items.push({food:req.body._id, quantity:1})
+     }
+     cart.save()
+     .then(updatedCart => res.json(cart))
     }
-  );
+
+  })
+   
 });
+
+///////////////////////////////////////////////////////////
+
+app.put("/remove-cart-item",authHandler, function (req:any, res) {
+  console.log("remove from cart Cart", req.user)
+  CartModel.findOne(
+    {user:req.user._id},
+  
+  ).then(cart => {
+    if(cart) {
+      const item = cart.items.find(item => item.food == req.body._id)
+     if(item) {
+       item.quantity--;
+       if(item.quantity <1){
+         cart.items.splice(cart.items.findIndex(ii => ii == item ),1)
+       }
+     }
+   cart?.save().then((updatedCart)=> {
+  CartModel.populate(updatedCart, "items.food").then((populatedCart)=> {
+    res.json(populatedCart)
+   })
+ })  
+    }
+  })
+});
+
+
+//**************************************************** */
+//push Items to cart 
+// app.put("/update-cart",authHandler, function (req:any, res) {
+  
+//   console.log("Login User", req.user)
+
+//   CartModel.findOneAndUpdate(
+//     {user:req.user._id},
+//     {$addToSet: { items:req.body._id },},
+//     {
+//       new: true,
+//     },
+//     function (err, updateCart) {
+//       if (err) {
+//         res.send("Error updating cart");
+//       } else {
+//         res.json(updateCart);
+//       }
+//     }
+//   );
+// });
 
 
 
@@ -239,7 +289,7 @@ app.put("/update-cart",authHandler, function (req:any, res) {
 app.get("/cart", authHandler, function (req: any, res) {
   CartModel.findOne( 
     {user:req.user._id}
-  ).populate('items')
+  ).populate('items.food')
   .populate('user')
     .then((data) => res.json({ data }))
     .catch((err) => {
