@@ -43,3 +43,18 @@ export const deleteCartFailure = createAction(
   '[Cart] delete Cart Failure',
   props<{ error: Error }>()
 );
+
+export const removeFromCart = createAction(
+  '[Cart] RemoveFromCart',
+  props<{ data: Food }>()
+);
+
+export const removeFromCartSuccess = createAction(
+  '[Cart] RemoveFromCart Success',
+  props<{ data: Cart }>()
+);
+
+export const removeFromCartFailure = createAction(
+  '[Cart] RemoveFromCart Failure',
+  props<{ error: Error }>()
+);

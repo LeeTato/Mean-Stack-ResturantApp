@@ -15,9 +15,12 @@ export class CartService {
   constructor(private api:ApiService) { }
 
   cartUpdate(food: Food) {
-    console.log("Update Cart In The Service",food)
    return this.api.put<Cart>('update-cart', food);
   }
+  removeFromCart(food: Food) {
+    return this.api.put<Cart>('remove-cart-item', food);
+   }
+
   getCart(){
     return this.api.get<{ data: Cart }>('cart')
     .pipe(map((res) => res.data));
@@ -27,4 +30,5 @@ export class CartService {
     return this.api. put<Cart >('delete-cart/' + food._id, food)
 
   }
+
 }

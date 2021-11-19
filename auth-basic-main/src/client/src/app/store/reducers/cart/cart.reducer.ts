@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { Cart } from '../../../../../../shared/models/cart.model';
-import { deleteCartSuccess, loadCartSuccess, updateCartSuccess } from '../../actions/cart/cart.actions';
+import { deleteCartSuccess, loadCartSuccess, removeFromCartSuccess, updateCartSuccess } from '../../actions/cart/cart.actions';
 import { logoutUserSuccess } from '../../actions/user/user.actions';
 
 
@@ -24,6 +24,10 @@ export const reducer = createReducer(
   }),
 
   on(updateCartSuccess, (state, action) => {
+    return { ...state, cart: action.data }
+  }),
+
+  on(removeFromCartSuccess, (state, action) => {
     return { ...state, cart: action.data }
   }),
 

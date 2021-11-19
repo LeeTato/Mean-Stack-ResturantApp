@@ -1,13 +1,15 @@
 
 <p>food-menu-list works!</p>
 <h1 style="padding-left: 40%;">Menu</h1>
+<ul>
   <li *ngFor="let food of foods$ | async " >
     <div class="container">
     <div class="row">
       <div class="col"><img src={{food.img}} alt="" width="100" height="60" ></div>
       <div class="col">{{food.foodName}}</div>
       <div class="col">{{food.foodPrice}}</div>
-      <div class="col"><button (click)="addFoodToCart(food)">Order</button></div>
+      <div class="col"><button (click)="addFoodToCart(food)">Order</button></div><hr>
     </div>
   </div>
 </li>
+</ul>
