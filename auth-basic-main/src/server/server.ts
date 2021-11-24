@@ -261,27 +261,6 @@ app.put("/remove-cart-item",authHandler, function (req:any, res) {
 });
 
 
-//**************************************************** */
-//push Items to cart 
-// app.put("/update-cart",authHandler, function (req:any, res) {
-  
-//   console.log("Login User", req.user)
-
-//   CartModel.findOneAndUpdate(
-//     {user:req.user._id},
-//     {$addToSet: { items:req.body._id },},
-//     {
-//       new: true,
-//     },
-//     function (err, updateCart) {
-//       if (err) {
-//         res.send("Error updating cart");
-//       } else {
-//         res.json(updateCart);
-//       }
-//     }
-//   );
-// });
 
 
 
@@ -326,13 +305,4 @@ app.listen(PORT, function () {
 
 
 });
-
-
-// io.on('connection', function(socket){
-//   console.log('a user connected');
-//   socket.emit('message', 'work')
-//   socket.on('disconnect', function(){
-//     console.log('user disconnected');
-//   });
-// });
 
