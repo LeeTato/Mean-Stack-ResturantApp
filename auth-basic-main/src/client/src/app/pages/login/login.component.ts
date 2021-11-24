@@ -1,4 +1,3 @@
-
 import {
   Component,
   Input,
@@ -8,30 +7,30 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store';
 import {
   createUser,
   loginUser,
   updateUser,
 } from 'src/app/store/actions/user/user.actions';
+import { loginFailerMsgSelector } from 'src/app/store/selectors/user/user.selectors';
 import { User } from '../../../../../shared/models/user.model';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements  OnInit, OnChanges {
+export class LoginComponent implements OnInit{
   userLogin: FormGroup;
   @Input() selectedUser: User | null = null;
+  loginFailMsg$: Observable<string>;
+
   constructor(private fb: FormBuilder, private store: Store<AppState>) {
+    this.loginFailMsg$ = this.store.select(loginFailerMsgSelector);
     this.userLogin = this.fb.group({
-      name: ['', Validators.required],
-      email: [
-        '',
-        Validators.compose([Validators.required, Validators.minLength(3)]),
-      ],
-      username: [
+    email: [
         '',
         Validators.compose([Validators.required, Validators.minLength(3)]),
       ],
@@ -44,26 +43,9 @@ export class LoginComponent implements  OnInit, OnChanges {
 
   ngOnInit(): void {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes?.selectedUser?.currentValue) {
-      const user = changes?.selectedUser?.currentValue;
-      this.userLogin.get('name')?.setValue(user.name);
-      this.userLogin.get('email')?.setValue(user.email);
-      this.userLogin.get('username')?.setValue(user.username);
-      this.userLogin.updateValueAndValidity();
-    }
-  }
-
-  postUser(selectedUser: User | null) {
-    !selectedUser
-      ? this.store.dispatch(createUser({ data: this.userLogin.value }))
-      : this.store.dispatch(
-          updateUser({ data: { ...selectedUser, ...this.userLogin.value } })
-        );
-    this.userLogin.reset();
-  }
 
   login() {
-    this.store.dispatch(loginUser({ data: this.userLogin.value }))
+    this.store.dispatch(loginUser({ data: this.userLogin.value }));
+    this.userLogin.reset();
   }
 }

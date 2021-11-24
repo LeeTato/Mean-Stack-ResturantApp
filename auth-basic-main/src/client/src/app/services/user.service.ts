@@ -3,6 +3,8 @@ import { ApiService } from './api.service';
 import { map } from 'rxjs/operators';
 import { User } from '../../../../shared/models/user.model';
 import { Router } from '@angular/router';
+import { loginUserSuccess } from '../store/actions/user/user.actions';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,13 +18,18 @@ export class UserService {
     return this.api.get<{ data: User[] }>('users').pipe(map((res) => res.data));
   }
   createUser(user: User) {
-    this.router.navigate(['/userLogin']);
+    // this.router.navigate(['/userLogin']);
     return this.api
       .post<{ data: User }>('create-user', user)
       .pipe(map((res) => res.data));
   }
   login(user: Partial<User>) {
-    this.router.navigate(['/menuList']);
+
+    // if(loginUserSuccess(email: User)){
+      // this.router.navigate(['/menuList']);
+    // } else{
+    //   alert('login wrong')
+    // }
     return this.api
       .post<{ data: User }>('login', user)
       .pipe(map((res) => res.data));
@@ -45,5 +52,12 @@ export class UserService {
     this.router.navigate(['/userLogin']);
      return this.api.get('logout')
 
+  }
+  loginNavigate(){
+    return of (this.router.navigate(['/menuList']));//of convert the line to observable
+  }
+
+  createLoginNavigate(){
+    return of(this.router.navigate(['/userLogin']));//of convert the code to observable
   }
 }

@@ -14,5 +14,13 @@ export const selectedUserSelector = createSelector(
   (state) => state.selectedUser
 )
 
+export const loginFailerMsgSelector = createSelector(
+  userFeatureSelector,
+  (state)=>state.msg
+);
 
+export const createUserMsgsSelector= createSelector(
+  userFeatureSelector,
+  (state)=>state.cMsg
+)
 

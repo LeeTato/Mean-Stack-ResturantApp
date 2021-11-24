@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { User } from '../../../../../../shared/models/user.model';
-import { createUserSuccess, deleteUserSuccess, loadUsers, loadUsersSuccess, logoutUserSuccess, selectUserAction, updateUserSuccess } from '../../actions/user/user.actions';
+import { createUserSuccess, deleteUserSuccess, loadUsers, loadUsersSuccess, loginUserFailure, logoutUserSuccess, selectUserAction, updateUserSuccess } from '../../actions/user/user.actions';
 
 
 export const userFeatureKey = 'user';
@@ -8,12 +8,16 @@ export const userFeatureKey = 'user';
 export interface State {
   users: User[];
   selectedUser: User | null;
+  msg: string;
+  cMsg:string;
 
 }
 
 export const initialState: State = {
   users: [],
   selectedUser: null,
+  msg:'',
+  cMsg:''
 };
 
 
@@ -34,11 +38,14 @@ export const reducer = createReducer(
   on(createUserSuccess, (state, action) => {
     const users = [...state.users];
     users.push(action.data);
-    return {...state, users}
+    return {...state, users, cMsg:'User Created successfully'}
   }),
   on(logoutUserSuccess, (state, action) => {
     return { ...state, selectedUser:null }
   }),
-
+ on(loginUserFailure, (state, action)=>{
+     console.log(action.error, "Wrong Information")
+     return {...state, msg:'Wrong Information'}
+ })
 );
 

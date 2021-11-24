@@ -94,3 +94,13 @@ export const logoutUserFailure = createAction(
   '[User] logout User Failure',
   props<{ error: Error }>()
 );
+
+export const loginNavigateSuccess = createAction(
+  '[User] loginNavigate Success'
+
+);
+
+export const createLoginNavigateSuccess = createAction(
+  '[User] CreateLoginNavigate Success'
+
+)

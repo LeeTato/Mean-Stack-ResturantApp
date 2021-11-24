@@ -4,6 +4,7 @@ import { EMPTY, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import {
+  createLoginNavigateSuccess,
   createUser,
   createUserFailure,
   createUserSuccess,
@@ -13,6 +14,7 @@ import {
   loadUsers,
   loadUsersFailure,
   loadUsersSuccess,
+  loginNavigateSuccess,
   loginUser,
   loginUserFailure,
   loginUserSuccess,
@@ -93,6 +95,30 @@ this.actions$.pipe(
     this.userService.logout().pipe(
       map((data) => logoutUserSuccess()),
       catchError((error) => of(logoutUserFailure({ error })))
+    )
+  )
+)
+);
+
+loginNavigate$ = createEffect(()=>
+this.actions$.pipe(
+  ofType(loginUserSuccess),
+  mergeMap(() =>
+    this.userService.loginNavigate().pipe(
+      map(() => loginNavigateSuccess()),
+
+    )
+  )
+)
+);
+
+createLoginNavigate$ = createEffect(()=>
+this.actions$.pipe(
+  ofType(createUserSuccess),
+  mergeMap(() =>
+    this.userService. createLoginNavigate().pipe(
+      map(() => createLoginNavigateSuccess()),
+
     )
   )
 )

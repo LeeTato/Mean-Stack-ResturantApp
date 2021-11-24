@@ -15,6 +15,10 @@
     <input type="text" formControlName='password' placeholder="password">
   </div>
   <button (click)="login()">Login</button>
+  <div *ngIf="(loginFailMsg$ | async) as fMsg ">
+    {{fMsg}}
+  </div>
 </form>
 </div>
+
 </div>

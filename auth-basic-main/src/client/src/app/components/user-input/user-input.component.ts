@@ -7,8 +7,10 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store';
 import {
+  createLoginNavigateSuccess,
   createUser,
   loginUser,
   updateUser,
@@ -23,7 +25,11 @@ import { User } from '../../../../../shared/models/user.model';
 export class UserInputComponent implements OnInit, OnChanges {
   addUser: FormGroup;
   @Input() selectedUser: User | null = null;
+  //createMsgSuccess$:Observable <string|null>
+
+
   constructor(private fb: FormBuilder, private store: Store<AppState>) {
+
     this.addUser = this.fb.group({
       name: ['', Validators.required],
       email: [
@@ -62,7 +68,5 @@ export class UserInputComponent implements OnInit, OnChanges {
     this.addUser.reset();
   }
 
-  login() {
-    this.store.dispatch(loginUser({ data: this.addUser.value }))
-  }
+
 }
