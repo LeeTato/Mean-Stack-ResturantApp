@@ -1,0 +1,19 @@
+<p>payment works!</p>
+<div class="container">
+
+  <h2 class="mb-5">Angular Stripe Credit Card Payment</h2>
+
+  <div class="col-md-4 mb-3" >
+    <li *ngFor="let user of user$ | async">
+      Hello  {{user.name}}
+    </li>
+  </div>
+
+  <div class="col-md-4 mb-3" *ngIf="(cart$ | async) as cart">
+    <button (click)="[checkout(cart.totalPrice)]" class="btn btn-primary btn-block"><p>Pay</p>{{cart.totalPrice}}</button>
+  </div>
+<!--
+  <div class="col-md-4">
+    <button (click)="checkout(40)" class="btn btn-primary btn-block">Pay $40</button>
+  </div> -->
+</div>
