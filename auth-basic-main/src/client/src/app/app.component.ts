@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SocketioService } from './services/socket.service';
+//import { SocketioService } from './services/socket.service';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +9,9 @@ import { SocketioService } from './services/socket.service';
 export class AppComponent {
 
   title = 'client';
-  constructor(private socketService: SocketioService) {}
+  constructor() {}
 
   ngOnInit() {
-    this.socketService.getMessage().subscribe(message => { console.log(message); });
+    
   }
 }

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { timeStamp } from 'console';
 import { Observable } from 'rxjs';
@@ -20,7 +21,7 @@ export class CartComponent implements OnInit {
   cart$ : Observable<Cart | null>
   user$ : Observable<User[]>
   @Input() public users: User[] = [];
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private router: Router) {
     this.cart$ = this.store.select(cartSelector)
     this.user$ = this.store.select(usersSelector)
 
@@ -43,6 +44,10 @@ addToCart(food: Food){
 this.store.dispatch(updateCart({data: food}))
 
 }
+checkOut(){
+  this.router.navigate(['/payment']);
+}
+
 
 }
 

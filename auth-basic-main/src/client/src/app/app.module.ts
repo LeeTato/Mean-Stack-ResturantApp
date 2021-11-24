@@ -27,6 +27,7 @@ import { CartEffects } from './store/effects/cart/cart.effects';
 import * as fromCart from './store/reducers/cart/cart.reducer';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { LoginComponent } from './pages/login/login.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -42,7 +43,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     NavigationComponent,
     HomeComponent,
     CartComponent,
-    LoginComponent
+    LoginComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
