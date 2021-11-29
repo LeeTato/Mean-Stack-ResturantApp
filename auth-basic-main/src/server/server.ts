@@ -6,10 +6,10 @@ import { UserModel } from "./schemas/user.schema.js";
 import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
 import cookieParser from "cookie-parser";
-//import * as socketIO from "socket.io";
 import http from 'http';
 import dotenv from "dotenv";
 import { authHandler } from "./middleware/auth.middleware.js";
+//import * as orderProcess from './middleware/order.middleware.js'
 import { FoodModel } from "./schemas/food.schema.js";
 import { CartModel } from "./schemas/cart.schema.js";
 dotenv.config();
@@ -38,7 +38,12 @@ mongoose
 app.use(cookieParser())
 app.use(cors({
     credentials: true,
-    origin: ['http://localhost:3000', 'http://localhost:4200', 'http://localhost:3501', 'http://localhost:8080']
+    origin: [
+    'http://localhost:3000', 
+    'http://localhost:4200', 
+    'http://localhost:3501', 
+    'http://localhost:8080'
+  ]
 }));
 app.use(express.json());
 
@@ -276,6 +281,35 @@ app.get("/cart", authHandler, function (req: any, res) {
       res.json({ errors: err });
     });
 });
+
+//create order 
+// app.post("/create-order",
+// orderProcess.createOrder,
+// orderProcess.emptyCart
+// );
+
+app.put('/empty-cart/:id',authHandler, function(req:any,res){
+ 
+  CartModel.findOneAndUpdate(
+    { user:req.user._id},
+    {
+        $set:{items:[] },
+    },
+    {
+        new: true,
+    },
+    function(err, emptyCart){
+        if(err){
+            res.send("Error empty food list from cart");
+        }else{
+            res.json(emptyCart);
+            console.log("empty food", emptyCart)
+        }
+    }
+)
+})
+
+
 
 // Delete cart Items
   app.put("/delete-cart/:id",authHandler, function (req:any, res) {
