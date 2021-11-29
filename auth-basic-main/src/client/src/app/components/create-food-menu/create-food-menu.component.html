@@ -1,24 +1,26 @@
-<p>create-food-menu works!</p>
+
 <div class="container">
-  <h1 style="padding-left: 40%;">Create Menu</h1>
+  <h1 style="padding-left: 30%;color:white">Create Menu</h1>
   <div class="row">
-  <form [formGroup]="createMenu">
+  <form [formGroup]="createMenu" style="padding-left: 30%;">
        <input type="text" formControlName='foodName' placeholder="FoodName"><br><br>
        <input type="text" formControlName='img' placeholder="ImageUrl"><br><br>
        <input type="text" formControlName='foodPrice' placeholder="FoodPrice"><br><br>
         <button (click)="addFood()">AddFood</button>
 
   </form>
+  </div>
+  </div>
  <br><br>
 
  <ul>
-  <h1 style="padding-left: 40%;">Admin Menu View</h1>
+  <h1 style="padding-left: 40%;color:white">Admin Menu View</h1>
   <li *ngFor="let food of adminView$ | async " >
     <div class="container">
     <div class="row"style="width=50px">
-      <div class="col"> <img src={{food.img}} alt="" width="100" height="60"  ></div>
+      <div class="col"> <img src={{food.img}} alt="" width="100" height="80"  ></div>
       <div class="col">{{food.foodName}}</div>
-      <div class="col">{{food.foodPrice}}</div>
+      <div class="col">${{food.foodPrice}}</div>
       <div class="col"><button (click)=" deleteFood(food)">Delete</button>
     </div>
   </div>

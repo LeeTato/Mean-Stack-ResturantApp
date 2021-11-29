@@ -1,9 +1,9 @@
-<p>login works!</p>
+
 <div class="container">
   <div class="row" style=" align-items: center;">
 
 <form [formGroup] = 'userLogin'>
-  <h2>Login Form</h2><br>
+  <h2>Login</h2><br>
 
   <div class="mb-3">
     <label class="form-label">Email address</label><br>
@@ -12,7 +12,7 @@
 
   <div class="mb-3">
     <label class="form-label">Password</label><br>
-    <input type="text" formControlName='password' placeholder="password">
+    <input type="password" formControlName='password' placeholder="password">
   </div>
   <button (click)="login()">Login</button>
   <div *ngIf="(loginFailMsg$ | async) as fMsg ">

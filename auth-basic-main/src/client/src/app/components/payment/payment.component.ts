@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/store';
+import { emptyCart } from 'src/app/store/actions/cart/cart.actions';
 import { cartSelector } from 'src/app/store/selectors/cart/cart.selectors';
 import { usersSelector } from 'src/app/store/selectors/user/user.selectors';
 import { Cart } from '../../../../../shared/models/cart.model';
+import { Food } from '../../../../../shared/models/food.model';
 import { User } from '../../../../../shared/models/user.model';
 
 @Component({
@@ -25,14 +27,18 @@ export class PaymentComponent implements OnInit {
     this.stripePaymentGateway();
   }
 
-  checkout(amount:number | undefined) {
+  checkout(amount:number | undefined, cart:Cart) {
     const strikeCheckout = (<any>window).StripeCheckout.configure({
       key: 'pk_test_51IOFc6Lr3AAb1A8aiceu2oP7PmyDHpKYWQGD9F5N7hMtavMGPdYKPQXjsOvQteGO9aOkDsizpQxOmI6dUuw93Irm00tUkv1EZV',
       locale: 'auto',
-      token: function (stripeToken: any) {
+      token:(stripeToken: any) => {
         console.log(stripeToken)
-        alert('Stripe token generated!');
-      }
+        // alert('Stripe token generated!');
+        alert('Payment was successful');
+        this.emptyCart(cart);
+      },
+
+
     });
 
     strikeCheckout.open({
@@ -40,6 +46,7 @@ export class PaymentComponent implements OnInit {
       description: 'Payment widgets',
       amount: amount! * 100
     });
+
   }
 
   stripePaymentGateway() {
@@ -64,4 +71,9 @@ export class PaymentComponent implements OnInit {
     }
   }
 
+
+
+emptyCart(cart:Cart){
+  this.store.dispatch(emptyCart({data:cart}))
+}
 }

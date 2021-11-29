@@ -1,4 +1,4 @@
-<p>payment works!</p>
+
 <div class="container">
 
   <h2 class="mb-5">Angular Stripe Credit Card Payment</h2>
@@ -10,8 +10,11 @@
   </div>
 
   <div class="col-md-4 mb-3" *ngIf="(cart$ | async) as cart">
-    <button (click)="[checkout(cart.totalPrice)]" class="btn btn-primary btn-block"><p>Pay</p>{{cart.totalPrice}}</button>
+    <button (click)="[checkout(cart.totalPrice, cart)]" class="btn btn-primary btn-block"><p>Pay</p>{{cart.totalPrice}}</button>
+    <!-- <button (click)="emptyCart(cart)">Empty</button> -->
   </div>
+
+
 <!--
   <div class="col-md-4">
     <button (click)="checkout(40)" class="btn btn-primary btn-block">Pay $40</button>

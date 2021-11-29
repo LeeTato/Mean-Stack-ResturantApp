@@ -15,8 +15,6 @@ input[type=text], input[type=password] {
   box-sizing: border-box;
 }
 button {
-  background-color: #04AA6D;
-  color: white;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
@@ -29,3 +27,6 @@ button {
 }
 
 form {border: 16px solid #f1f1f1;}
+li{
+color: white;
+}
