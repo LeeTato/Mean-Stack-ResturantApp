@@ -24,12 +24,6 @@ export class UserService {
       .pipe(map((res) => res.data));
   }
   login(user: Partial<User>) {
-
-    // if(loginUserSuccess(email: User)){
-      // this.router.navigate(['/menuList']);
-    // } else{
-    //   alert('login wrong')
-    // }
     return this.api
       .post<{ data: User }>('login', user)
       .pipe(map((res) => res.data));

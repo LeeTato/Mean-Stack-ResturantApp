@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { CartService } from 'src/app/services/cart.service';
-import { loadCart, loadCartSuccess, loadCartFailure, updateCartFailure, updateCartSuccess,updateCart, deleteCart, deleteCartSuccess, deleteCartFailure, removeFromCart, removeFromCartSuccess, removeFromCartFailure } from '../../actions/cart/cart.actions';
+import { loadCart, loadCartSuccess, loadCartFailure, updateCartFailure, updateCartSuccess,updateCart, deleteCart, deleteCartSuccess, deleteCartFailure, removeFromCart, removeFromCartSuccess, removeFromCartFailure, emptyCart, emptyCartSuccess, emptyCartFailure } from '../../actions/cart/cart.actions';
 
 
 
@@ -45,7 +45,7 @@ updateCart$ = createEffect(() =>
     )
   );
 
-  
+
 deleteCart$ = createEffect(() =>
 this.actions$.pipe(
   ofType(deleteCart),
@@ -57,6 +57,18 @@ this.actions$.pipe(
   )
 )
 );
+
+emptyCart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(emptyCart),
+      mergeMap((action) =>
+        this.cartService.emptyCart(action.data).pipe(
+          map((data) => emptyCartSuccess({ data })),
+          catchError((error) => of(emptyCartFailure({ error })))
+        )
+      )
+    )
+  );
 
   constructor(private actions$: Actions, private cartService: CartService) {}
 

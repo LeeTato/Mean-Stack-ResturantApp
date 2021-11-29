@@ -27,8 +27,12 @@ export class CartService {
 
   }
   deleteFromCart(food: Food) {
-    return this.api. put<Cart >('delete-cart/' + food._id, food)
+    return this.api.put<Cart >('delete-cart/' + food._id, food)
 
   }
+
+  emptyCart(cart: Cart) {
+    return this.api.put<Cart>('empty-cart/'+ cart._id,  cart);
+   }
 
 }
