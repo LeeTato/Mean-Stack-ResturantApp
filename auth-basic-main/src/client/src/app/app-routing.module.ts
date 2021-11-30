@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CartComponent } from './components/cart/cart.component';
+import { ContactPageComponent } from './components/contact-page/contact-page.component';
 import { CreateFoodMenuComponent } from './components/create-food-menu/create-food-menu.component';
 import { FoodMenuListComponent } from './components/food-menu-list/food-menu-list.component';
 import { HomeComponent } from './components/home/home.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'menuList', component: FoodMenuListComponent},
   {path: 'payment', component: PaymentComponent},
   {path: 'cart', component: CartComponent},
+  {path: 'contact', component: ContactPageComponent},
   {path: 'userLogin', component: LoginComponent},
   {path: 'users', component: PageUsersComponent, canActivate: [AuthGuard], resolve: []},
   {path: 'home', component: HomeComponent},

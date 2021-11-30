@@ -26,7 +26,9 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/userLogin">Login</a>
         </li>
-
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact">Contact Page</a>
+        </li>
 
         <li class="nav-item me-3 me-lg-0" >
           <a class="nav-link" routerLink="/cart">
@@ -38,9 +40,11 @@
            </ng-container>
                </i>
           </a>
-
+        <li *ngFor="let user of user$ | async">
+          <p>Hello:{{user.email}}</p>
         </li>
       </ul>
+
     </div>
  <button (click)="logout()" class= "navBtn">Logout</button>
   </div>

@@ -16,6 +16,8 @@ export class CreateFoodMenuComponent implements OnInit {
   createMenu: FormGroup;
   constructor( private fb: FormBuilder,private store:Store<AppState>) {
     this. adminView$ = this.store.select(foodsSelector)
+
+    
     this.createMenu = this.fb.group({
       foodName:['',Validators.required],
       img:['',Validators.compose([Validators.required])],
@@ -36,7 +38,7 @@ export class CreateFoodMenuComponent implements OnInit {
   this.store.dispatch( deleteFood({data: food}))
   console.log(`food '${food.foodName}' deleted successfully`);
 }
-  
+
 }
 
 

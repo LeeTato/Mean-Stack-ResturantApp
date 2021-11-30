@@ -46,6 +46,7 @@ export const reducer = createReducer(
  on(loginUserFailure, (state, action)=>{
      console.log(action.error, "Wrong Information")
      return {...state, msg:'Wrong Information'}
- })
+ }),
+
 );
 
