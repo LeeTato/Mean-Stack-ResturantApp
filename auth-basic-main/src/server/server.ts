@@ -9,10 +9,10 @@ import cookieParser from "cookie-parser";
 import http from "http";
 import dotenv from "dotenv";
 import { authHandler } from "./middleware/auth.middleware.js";
-//import * as orderProcess from './middleware/order.middleware.js'
 import { FoodModel } from "./schemas/food.schema.js";
 import { CartModel } from "./schemas/cart.schema.js";
 import Stripe from 'stripe';
+import path from 'path';
 dotenv.config();
 
 const secret=process.env.ACCESS_SECRET_KEY as string;
@@ -29,7 +29,7 @@ const app = express();
 
 const saltRounds = 10;
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 mongoose
 	.connect(`${process.env.MONGO_URL}`)
@@ -51,12 +51,10 @@ app.use(
 	})
 );
 app.use(express.json());
+const clientPath = path.join(__dirname, "/dist/client");
+app.use(express.static(clientPath));
 
-app.get("/", function (req, res) {
-	res.json({ message: "test" });
-});
-
-app.get("/posts", function (req, res) {
+app.get("/api/posts", function (req, res) {
 	PostModel.find()
 		.then((data) => res.json({ data }))
 		.catch((err) => {
@@ -65,7 +63,7 @@ app.get("/posts", function (req, res) {
 		});
 });
 
-app.get("/users", authHandler, function (req: any, res) {
+app.get("/api/users", authHandler, function (req: any, res) {
 	UserModel.find({ email: req.user.email }, "-password")
 		.then((data) => res.json({ data }))
 		.catch((err) => {
@@ -74,7 +72,7 @@ app.get("/users", authHandler, function (req: any, res) {
 		});
 });
 
-app.post("/create-user", function (req, res) {
+app.post("/api/create-user", function (req, res) {
 	const { name, email, username, password } = req.body;
 	bcrypt.genSalt(saltRounds, function (err, salt) {
 		bcrypt.hash(password, salt, function (err, hash) {
@@ -105,7 +103,7 @@ app.post("/create-user", function (req, res) {
 
 // Delete user
 
-app.delete("/delete-user/:id", function (req, res) {
+app.delete("/api/delete-user/:id", function (req, res) {
 	const _id = req.params.id;
 	UserModel.findByIdAndDelete(_id).then((data) => {
 		console.log(data);
@@ -114,7 +112,7 @@ app.delete("/delete-user/:id", function (req, res) {
 });
 
 //Update User
-app.put("/update-user/:id", function (req, res) {
+app.put("/api/update-user/:id", function (req, res) {
 	UserModel.findByIdAndUpdate(
 		req.params.id,
 		{
@@ -134,7 +132,7 @@ app.put("/update-user/:id", function (req, res) {
 });
 
 // Login
-app.post("/login", function (req, res) {
+app.post("/api/login", function (req, res) {
 	const { email, password } = req.body;
 	console.log("Login Information", req.body);
 	UserModel.findOne({ email })
@@ -164,7 +162,7 @@ app.post("/login", function (req, res) {
 
 // Logout
 
-app.get("/logout", authHandler, function (req, res) {
+app.get("/api/logout", authHandler, function (req, res) {
 	console.log("LOGOUT");
 	res.cookie("jwt", "", {
 		httpOnly: true,
@@ -175,13 +173,13 @@ app.get("/logout", authHandler, function (req, res) {
 
 //Check if the user Login
 
-app.get("/check-login", authHandler, (req, res) => {
+app.get("/api/check-login", authHandler, (req, res) => {
 	res.json({ message: "yes" });
 });
 
 //create food
 
-app.post("/create-food", function (req, res) {
+app.post("/api/create-food", function (req, res) {
 	const { foodName, img, foodPrice } = req.body;
 	const food = new FoodModel({
 		foodName,
@@ -201,7 +199,7 @@ app.post("/create-food", function (req, res) {
 
 // get foods
 
-app.get("/foods", authHandler, function (req, res) {
+app.get("/api/foods", authHandler, function (req, res) {
 	FoodModel.find()
 		.then((data) => res.json({ data }))
 		.catch((err) => {
@@ -211,7 +209,7 @@ app.get("/foods", authHandler, function (req, res) {
 });
 
 //Delete food
-app.delete("/delete-food/:id", function (req, res) {
+app.delete("/api/delete-food/:id", function (req, res) {
 	const _id = req.params.id;
 	FoodModel.findByIdAndDelete(_id).then((data) => {
 		console.log(data);
@@ -220,7 +218,7 @@ app.delete("/delete-food/:id", function (req, res) {
 });
 
 //************************************************************************************************ */
-app.put("/update-cart", authHandler, function (req: any, res) {
+app.put("/api/update-cart", authHandler, function (req: any, res) {
 	CartModel.findOne({ user: req.user._id })
 		.populate("items.food")
 		.then((cart) => {
@@ -241,7 +239,7 @@ app.put("/update-cart", authHandler, function (req: any, res) {
 
 ///////////////////////////////////////////////////////////
 
-app.put("/remove-cart-item", authHandler, function (req: any, res) {
+app.put("/api/remove-cart-item", authHandler, function (req: any, res) {
 	console.log("remove from cart Cart", req.user);
 	CartModel.findOne({ user: req.user._id }).then((cart) => {
 		if (cart) {
@@ -265,7 +263,7 @@ app.put("/remove-cart-item", authHandler, function (req: any, res) {
 });
 
 // Get cart Items
-app.get("/cart", authHandler, function (req: any, res) {
+app.get("/api/cart", authHandler, function (req: any, res) {
 	CartModel.findOne({ user: req.user._id })
 		.populate("items.food")
 		.populate("user")
@@ -282,7 +280,7 @@ app.get("/cart", authHandler, function (req: any, res) {
 // orderProcess.emptyCart
 // );
 
-app.put("/empty-cart/:id", authHandler, function (req: any, res) {
+app.put("/api/empty-cart/:id", authHandler, function (req: any, res) {
 	CartModel.findOneAndUpdate(
 		{ user: req.user._id },
 		{
@@ -303,7 +301,7 @@ app.put("/empty-cart/:id", authHandler, function (req: any, res) {
 });
 
 //stripe
-app.post("/payment", (req, res) => {
+app.post("/api/payment", (req, res) => {
 	stripe.charges.create(
 		{
 			amount: req.body.amount,
@@ -322,7 +320,7 @@ app.post("/payment", (req, res) => {
 
 
 // Delete cart Items
-app.put("/delete-cart/:id", authHandler, function (req: any, res) {
+app.put("/api/delete-cart/:id", authHandler, function (req: any, res) {
 	CartModel.findOneAndUpdate(
 		{ user: req.user._id },
 		{
@@ -341,7 +339,15 @@ app.put("/delete-cart/:id", authHandler, function (req: any, res) {
 	).populate("items");
 });
 
-
+app.all("/api/*", function (req, res) {
+	res.sendStatus(404);
+  });
+  app.get("*", function (req, res) {
+	const filePath = path.join(__dirname, "/dist/client/index.html");
+	console.log(filePath);
+	res.sendFile(filePath);
+  });
+  
 
 
 app.listen(PORT, function () {
