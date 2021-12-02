@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Cart } from '../../../../shared/models/cart.model';
@@ -10,9 +11,7 @@ import { ApiService } from './api.service';
 })
 export class CartService {
 
-
-
-  constructor(private api:ApiService) { }
+constructor(private api:ApiService,private http: HttpClient) { }
 
   cartUpdate(food: Food) {
    return this.api.put<Cart>('update-cart', food);
@@ -35,4 +34,9 @@ export class CartService {
     return this.api.put<Cart>('empty-cart/'+ cart._id,  cart);
    }
 
+
+ payment(amount:number,id:string){
+   console.log('Payment', amount,id)
+   return this.api.post('payment', {amount,id})
+ }
 }

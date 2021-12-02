@@ -10,13 +10,28 @@
   </div>
 
   <div class="col-md-4 mb-3" *ngIf="(cart$ | async) as cart">
-    <button (click)="[checkout(cart.totalPrice, cart)]" class=" btn-block"><p>Click To Pay</p>${{cart.totalPrice}}</button>
+    <button (click)="checkout(cart.totalPrice, cart)" class=" btn-block"><p>Click To Pay</p>${{cart.totalPrice}}</button>
 
   </div>
 
 
-<!--
-  <div class="col-md-4">
+  <!-- <div class="col-md-4">
     <button (click)="checkout(40)" class="btn btn-primary btn-block">Pay $40</button>
   </div> -->
+
 </div>
+<!-- <form class="mb-5" novalidate(ngSubmit)="buy()" [formGroup]="stripeForm">
+<div class="form-group">
+  <input type="text" class="form-control"formControlName="name"placeholder="Full Name" required>
+  <span class="text-danger" *ngIf="stripeForm.get('name').hasError('required') && submitted">Full Name is required</span>
+</div>
+<div class="form-group">
+  <input type="number" class="form-control"formControlName="amount"placeholder="Amount" required>
+  <span class="text-danger" *ngIf="stripeForm.get('amount').hasError('required') && submitted">Amount is required</span>
+</div>
+<div class="form-group">
+  <div id="card-element" class="field"></div>
+
+</div>
+<button class ="btn btn-warning w-25 border shadow" type="submit">BUY</button>
+</form> -->
