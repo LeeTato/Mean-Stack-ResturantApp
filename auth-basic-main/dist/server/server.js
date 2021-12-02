@@ -13,6 +13,7 @@ import { FoodModel } from "./schemas/food.schema.js";
 import { CartModel } from "./schemas/cart.schema.js";
 import Stripe from 'stripe';
 import path from 'path';
+const __dirname = path.resolve();
 dotenv.config();
 const secret = process.env.ACCESS_SECRET_KEY;
 const stripe = new Stripe(secret, { apiVersion: '2020-08-27' });
