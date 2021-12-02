@@ -34,7 +34,7 @@ export class UserInputComponent implements OnInit, OnChanges {
       name: ['', Validators.required],
       email: [
         '',
-        Validators.compose([Validators.required, Validators.minLength(3)]),
+        Validators.compose([Validators.required, Validators.email]),
       ],
       username: [
         '',

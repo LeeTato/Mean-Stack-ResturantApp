@@ -72,3 +72,16 @@ export const emptyCartFailure = createAction(
   '[Cart] Empty Cart Failure',
   props<{ error: Error }>()
 );
+export const payment = createAction(
+  '[Cart] Load payment'
+);
+
+export const paymentSuccess = createAction(
+  '[Cart] Load payment Success',
+
+);
+
+export const paymentFailure = createAction(
+  '[Cart] Load payment Failure',
+  props<{ error: Error }>()
+);

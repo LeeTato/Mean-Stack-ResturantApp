@@ -30,7 +30,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { ContactPageComponent } from './components/contact-page/contact-page.component';
 import { NgxStripeModule } from 'ngx-stripe';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
@@ -47,7 +47,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     CartComponent,
     LoginComponent,
     PaymentComponent,
-    ContactPageComponent
+    ContactPageComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -63,7 +64,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     SocketIoModule.forRoot(config),
     StoreModule.forFeature(fromFood.foodFeatureKey, fromFood.reducer),
     StoreModule.forFeature(fromCart.cartFeatureKey, fromCart.reducer),
-    NgxStripeModule.forRoot('pk_test_51IOFc6Lr3AAb1A8aiceu2oP7PmyDHpKYWQGD9F5N7hMtavMGPdYKPQXjsOvQteGO9aOkDsizpQxOmI6dUuw93Irm00tUkv1EZV'),
+    //NgxStripeModule.forRoot('pk_test_51IOFc6Lr3AAb1A8aiceu2oP7PmyDHpKYWQGD9F5N7hMtavMGPdYKPQXjsOvQteGO9aOkDsizpQxOmI6dUuw93Irm00tUkv1EZV'),
+    BrowserAnimationsModule,
 
   ],
   providers: [],
