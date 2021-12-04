@@ -2,77 +2,58 @@
 <section class="mb-4">
 
   <!--Section heading-->
-  <h2 class="h1-responsive font-weight-bold text-center my-4">Contact us</h2>
+  <h1 class="h1-responsive font-weight-bold text-center my-4">Contact us</h1>
   <!--Section description-->
   <p class="text-center w-responsive mx-auto mb-5">Do you have any questions? Please do not hesitate to contact us directly.</p>
 <div class="container">
   <div class="row">
       <!--Grid column-->
-      <div class="col-md-6 mb-md-0 mb-5">
-          <form id="contact-form" name="contact-form" action="#" method="#">
 
-              <!--Grid row-->
-              <div class="row">
+      <div div class="col-md-6">
+          <form style="width: 50%; margin: auto">
+       <div>
 
-                  <!--Grid column-->
-                  <div class="col-md-9">
-                      <div class="md-form mb-0">
-                          <input type="text" id="name" name="name" class="form-control">
-                          <label for="name" class="">Your name</label>
-                      </div>
-                  </div>
-                </div>
-                  <!--Grid column-->
+           <div style="width: 100%"class="row">
+               <input placeholder="Email" [formControl]="emailFormControl">
+               <div *ngIf="emailFormControl.invalid && (emailFormControl.touched)">
+                 <p>Please enter a valid email address</p>
+               </div>
+               <!-- <div *ngIf="emailFormControl.hasError('required')">
+                 <p>Email is required</p>
+               </div> -->
+             </div><br>
+             <div style="width: 100%"class="row">
+             <input placeholder="Name" [formControl]="nameFormControl" />
+             <div *ngIf="nameFormControl.hasError('minlength')">
+               <p>Name must be at least 4 characters long.</p>
+             </div>
+             <!-- <div *ngIf="nameFormControl.hasError('required')">
+            <p> Name is required</p>
+             </div> -->
+           </div><br>
+           <div style="width: 100%"class="row">
+             <input placeholder="subject" [formControl]="subjectFormControl"/>
+             <div *ngIf="subjectFormControl.hasError('minlength')">
+             </div>
+             <!-- <div *ngIf="subjectFormControl.hasError('required')">
+               <p>subject is required</p>
+             </div> -->
+           </div><br>
+           <div style="width: 100%"class="row">
+             <textarea placeholder="textarea" rows="4" [formControl]="textareaFormControl"></textarea>
+           </div><br>
+           <div>
+           </div>
+           </div>
+           <button
+      [disabled]="emailFormControl.invalid || nameFormControl.invalid || loading"
+      color="primary"
+      (click)="register()">
+      {{buttonText}}
+    </button>
+          </form>
 
-                  <!--Grid column-->
-                  <div class="row">
-                  <div class="col-md-9">
-                      <div class="md-form mb-0">
-                          <input type="text" id="email" name="email" class="form-control">
-                          <label for="email" class="">Your email</label>
-                      </div>
-                  </div>
-                  <!--Grid column-->
-
-              </div>
-              <!--Grid row-->
-
-              <!--Grid row-->
-              <div class="row">
-                  <div class="col-md-9">
-                      <div class="md-form mb-0">
-                          <input type="text" id="subject" name="subject" class="form-control">
-                          <label for="subject" class="">Subject</label>
-                      </div>
-                  </div>
-              </div>
-              <!--Grid row-->
-
-              <!--Grid row-->
-              <div class="row">
-
-                  <!--Grid column-->
-                  <div class="col-md-9">
-
-                      <div class="md-form">
-                          <textarea type="text" id="message" name="message" rows="6" class="form-control md-textarea"></textarea>
-                          <label for="message">Your message</label>
-                      </div>
-
-                  </div>
-              </div>
-              <!--Grid row-->
-
-            </form>
-            <button>Send</button>
-
-          <div class="text-center text-md-left">
-              <!-- <a class="btn btn-primary" onclick="document.getElementById('contact-form').submit();">Send</a> -->
-            </div>
-          <div class="status"></div>
-      </div>
-      <!--Grid column-->
-
+          </div>
       <!--Grid column-->
       <div class="col-md-3 text-center">
           <ul class="list-unstyled mb-0">
@@ -85,14 +66,17 @@
               </li>
 
               <li><i class="fas fa-envelope mt-4 fa-2x"></i>
-                  <p>contact@mdbootstrap.com</p>
+                  <p>LeeResturant@gmail.com</p>
               </li>
           </ul>
       </div>
       <!--Grid column-->
 
   </div>
+
 </div>
+
+
 </section>
 <!--Section: Contact v.2-->
 

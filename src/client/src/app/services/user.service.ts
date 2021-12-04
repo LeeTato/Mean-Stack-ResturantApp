@@ -54,4 +54,7 @@ export class UserService {
   createLoginNavigate(){
     return of(this.router.navigate(['/userLogin']));//of convert the code to observable
   }
+  sendEmail(data:any){
+    return this.api.post('sendEmail', data)
+    }
 }
