@@ -13,6 +13,8 @@ import { FoodModel } from "./schemas/food.schema.js";
 import { CartModel } from "./schemas/cart.schema.js";
 import Stripe from 'stripe';
 import path from 'path';
+import nodemailer from 'nodemailer';
+import "body-parser";
 const __dirname = path.resolve();
 dotenv.config();
 const secret = process.env.ACCESS_SECRET_KEY;
@@ -27,7 +29,7 @@ const app = express();
 const saltRounds = 10;
 const PORT = process.env.PORT || 3000;
 mongoose
-    .connect(`${process.env.MONGO_URL}`)
+    .connect("http://localhost:27017/restaurantDB")
     .then(() => {
     console.log("Connected to DB Successfully");
 })
@@ -273,6 +275,37 @@ app.post("/api/payment", (req, res) => {
         res.sendStatus(501);
     });
     console.log(req.body);
+});
+//////////////////////////////////////////////////////////////////////////////////////
+// Nodemailer
+app.post("/api/sendEmail", (req, res) => {
+    console.log("request came");
+    let user = req.body;
+    sendMail(user, (info) => {
+        console.log(`The mail has been send ${info.messageId}`);
+        res.send(info);
+    });
+    async function sendMail(user, callback) {
+        // create reusable transporter object using the default SMTP transport
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 587,
+            secure: false,
+            auth: {
+                user: 'sifenlegese7@gmail.com',
+                pass: 'Blen#8523'
+            }
+        });
+        let mailOptions = {
+            from: user.email,
+            to: 'sifenlegese7@gmail.com',
+            subject: user.subject,
+            html: `<p>${user.textarea}</p>`
+        };
+        // send mail with defined transport object
+        let info = await transporter.sendMail(mailOptions);
+        callback(info);
+    }
 });
 // Delete cart Items
 app.put("/api/delete-cart/:id", authHandler, function (req, res) {
