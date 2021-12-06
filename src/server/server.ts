@@ -339,14 +339,14 @@ app.post("/api/sendEmail", (req, res) => {
 	let transporter = nodemailer.createTransport({
 	  service: "Gmail",
 	  auth: {
-		user:process.env.USER_NAME,
+		user:process.env.USER_EMAIL,
         pass:process.env.PASSWORD
 	  }
 	});
   
 	let mailOptions = {
 	 from: user.email,
-	  to:'sifenlegese7@gmail.com',
+	  to:process.env.USER_EMAIL,
 	  subject:user.subject,
 	  html:`<p>${user.textarea}</p>`
 	};
