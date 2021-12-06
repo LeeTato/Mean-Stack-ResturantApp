@@ -288,12 +288,10 @@ app.post("/api/sendEmail", (req, res) => {
     async function sendMail(user, callback) {
         // create reusable transporter object using the default SMTP transport
         let transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 587,
-            secure: false,
+            service: "Gmail",
             auth: {
-                user: 'sifenlegese7@gmail.com',
-                pass: 'Blen#8523'
+                user: process.env.USER_NAME,
+                pass: process.env.PASSWORD
             }
         });
         let mailOptions = {

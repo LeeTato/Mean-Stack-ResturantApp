@@ -37,7 +37,7 @@ const saltRounds = 10;
 const PORT = process.env.PORT || 3000;
 
 mongoose
-	 .connect(`${process.env.MONGO_URL}`,)
+	 .connect(`${process.env.MONGO_URL}`)
 	.then(() => {
 		console.log("Connected to DB Successfully");
 	})
@@ -337,12 +337,10 @@ app.post("/api/sendEmail", (req, res) => {
   async function sendMail(user:any, callback:any) {
 	// create reusable transporter object using the default SMTP transport
 	let transporter = nodemailer.createTransport({
-	  host: "smtp.gmail.com",
-	  port: 587,
-	  secure: false, // true for 465, false for other ports
+	  service: "Gmail",
 	  auth: {
-		user:'sifenlegese7@gmail.com',
-        pass:'Blen#8523'
+		user:process.env.USER_NAME,
+        pass:process.env.PASSWORD
 	  }
 	});
   
