@@ -295,7 +295,7 @@ app.post("/api/sendEmail", (req, res) => {
             }
         });
         let mailOptions = {
-            from: user.email,
+            from: req.body,
             to: process.env.USER_EMAIL,
             subject: user.subject,
             html: `<p>${user.textarea}</p>`
