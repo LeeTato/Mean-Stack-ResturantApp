@@ -29,7 +29,7 @@ const app = express();
 const saltRounds = 10;
 const PORT = process.env.PORT || 3000;
 mongoose
-    .connect(`${process.env.MONGO_URL}`)
+    .connect("http://localhost:27017/restaurantDB")
     .then(() => {
     console.log("Connected to DB Successfully");
 })
@@ -294,11 +294,16 @@ app.post("/api/sendEmail", (req, res) => {
                 pass: process.env.PASSWORD
             }
         });
+        const fromEmail = `"Customer" <${req.body.email}>`;
+        console.log(fromEmail);
         let mailOptions = {
-            from: req.body,
+            from: {
+                name: 'Consultation',
+                address: req.body.email
+            },
             to: process.env.USER_EMAIL,
             subject: user.subject,
-            html: `<p>${user.textarea}</p>`
+            html: `<p>${user.textarea}</p>` + req.body.email
         };
         // send mail with defined transport object
         let info = await transporter.sendMail(mailOptions);
